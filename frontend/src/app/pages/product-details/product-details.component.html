@@ -1,0 +1,105 @@
+<div class="min-h-screen bg-gradient-to-br from-slate-50 to-white py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
+    <div class="grid grid-cols-1 md:grid-cols-2">
+      <!-- Product Image -->
+      <div class="flex items-center justify-center p-4 md:p-6">
+        <img
+          [src]="getImageUrl(product()!.imageUrl)"
+          alt="{{ product()!.title }}"
+          class="w-full max-w-sm h-[180px] object-contain rounded-lg bg-white"
+        />
+      </div>
+
+      <!-- Product Info -->
+      <div class="p-4 md:p-6 flex flex-col gap-4">
+        <!-- Title & Rating -->
+        <div>
+          <h1 class="text-2xl md:text-3xl font-bold text-gray-900 mb-1">
+            {{ product()!.title }}
+          </h1>
+          <app-product-rating [rating]="product()!.rating ?? 0"></app-product-rating>
+          <div class="mt-1">
+            <p *ngIf="product()!.stock; else outOfStock" class="text-green-600 font-semibold">
+              Available
+            </p>
+            <ng-template #outOfStock>
+              <p class="text-red-600 font-semibold">Out of Stock</p>
+            </ng-template>
+          </div>
+        </div>
+
+        <!-- Price -->
+        <div class="flex items-center gap-2">
+          <span class="text-2xl md:text-3xl font-bold text-indigo-600">
+            ${{ product()!.price }}
+          </span>
+          <span
+            *ngIf="product()!.originalPrice"
+            class="text-xl md:text-xl text-gray-500 line-through"
+          >
+            ${{ product()!.originalPrice }}
+          </span>
+        </div>
+
+        <!-- Description -->
+        <p class="text-gray-700 text-sm md:text-base leading-relaxed line-clamp-4">
+          {{ product()!.description }}
+        </p>
+
+        <!-- Cart Controls -->
+        <div class="mt-4">
+          <ng-container *ngIf="cartService.getQuantity(product()!) === 0; else quantityControls">
+            <app-primary-button
+              (buttonClicked)="cartService.addToCart(product()!)"
+              label="Add to Cart"
+              class="w-full py-2 text-base font-semibold rounded-lg"
+            />
+          </ng-container>
+
+          <ng-template #quantityControls>
+            <div class="flex items-center gap-4">
+              <button
+                (click)="cartService.decreaseQuantity(product()!)"
+                class="w-10 h-10 flex items-center justify-center rounded-full text-3xl cursor-pointer text-red-600"
+              >
+                <fa-icon icon="circle-minus"></fa-icon>
+              </button>
+
+              <span class="font-semibold text-lg">
+                {{ cartService.getQuantity(product()!) }}
+              </span>
+
+              <button
+                (click)="cartService.addToCart(product()!)"
+                class="w-10 h-10 flex items-center justify-center rounded-full text-3xl cursor-pointer text-green-600"
+              >
+                <fa-icon icon="circle-plus"></fa-icon>
+              </button>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="px-25 py-5">
+    <h1 class="font-bold text-xl mb-3">You may also like:</h1>
+    <div class="flex gap-4 items-center justify-center">
+      <div
+        *ngFor="let randomProduct of randomProducts()"
+        class="bg-white rounded-xl shadow p-2 flex flex-col items-center cursor-pointer hover:shadow-lg transition-shadow"
+        (click)="goToDetails(randomProduct.id)"
+      >
+        <img
+          [src]="getImageUrl(randomProduct.imageUrl)"
+          [alt]="randomProduct.title"
+          class="w-[180px] h-[180px] object-contain mb-2"
+        />
+        <h2 class="text-sm font-medium text-gray-900 text-center">
+          {{ randomProduct.title }}
+        </h2>
+        <span class="text-md font-bold text-gray-900">${{ randomProduct.price }}</span>
+      </div>
+    </div>
+  </div>
+</div>

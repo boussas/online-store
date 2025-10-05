@@ -1,0 +1,15 @@
+<div class="bg-white text-black flex flex-col shadow-[0_4px_4px_-2px_rgba(0,0,0,0.1)]">
+  <!-- Top bar -->
+  <div class="px-6 py-3 flex w-full justify-between items-center">
+    <button class="text-2xl font-bold cursor-pointer" routerLink="/">{{ title() }}</button>
+
+    <app-search-bar class="w-[35%]" />
+    <div class="flex flex-row gap-2">
+      <app-user />
+      <app-cart-icon />
+    </div>
+  </div>
+
+  <!-- Nav bar -->
+  <app-nav />
+</div>

@@ -1,0 +1,161 @@
+<div class="px-10">
+  <p-table
+    [value]="products()"
+    dataKey="id"
+    [paginator]="true"
+    [rows]="10"
+    [rowsPerPageOptions]="[10, 25, 50]"
+    [showGridlines]="true"
+    sortField="id"
+    [sortOrder]="1"
+  >
+    <ng-template #caption>
+      <div class="flex justify-between items-center mb-2">
+        <h2 class="text-xl font-bold">Products</h2>
+        <p-button label="Add Product" icon="pi pi-plus" (onClick)="openDialog()"></p-button>
+      </div>
+    </ng-template>
+
+    <ng-template #header>
+      <tr>
+        <th pSortableColumn="id">ID <p-sortIcon field="id" /></th>
+        <th pSortableColumn="title">Title <p-sortIcon field="title" /></th>
+        <th>Image</th>
+        <th pSortableColumn="price">Price <p-sortIcon field="price" /></th>
+        <th pSortableColumn="stock">Stock <p-sortIcon field="stock" /></th>
+        <th pSortableColumn="categoryId">Category <p-sortIcon field="categoryId" /></th>
+        <th pSortableColumn="isActive">Active <p-sortIcon field="isActive" /></th>
+        <th>Actions</th>
+      </tr>
+    </ng-template>
+
+    <ng-template #body let-product>
+      <tr>
+        <td>{{ product.id }}</td>
+        <td>{{ product.title }}</td>
+        <td>
+          <img
+            *ngIf="product.imageUrl"
+            [src]="getImageUrl(product.imageUrl)"
+            [alt]="product.title"
+            width="60"
+            class="shadow-1 border-round"
+            style="object-fit: cover; height: 60px"
+          />
+          <span *ngIf="!product.imageUrl" class="text-gray-500">No image</span>
+        </td>
+        <td>{{ product.price | currency }}</td>
+        <td>{{ product.stock }}</td>
+        <td>{{ product.categoryName || 'Unknown' }}</td>
+        <td>{{ product.isActive ? 'Yes' : 'No' }}</td>
+        <td>
+          <button
+            type="button"
+            class="p-2 rounded-md bg-amber-500 text-white hover:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-amber-400 mr-2"
+            (click)="openDialog(product)"
+          >
+            <fa-icon icon="pen-to-square"></fa-icon>
+          </button>
+
+          <!-- Delete Button -->
+          <button
+            type="button"
+            class="p-2 rounded-md bg-red-500 text-white hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400"
+            (click)="deleteProduct(product)"
+          >
+            <fa-icon icon="trash"></fa-icon>
+          </button>
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template #emptymessage>
+      <tr>
+        <td colspan="7">No products found.</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+<!-- Product Modal -->
+<p-dialog
+  header="{{ selectedProduct ? 'Update Product' : 'Add Product' }}"
+  [(visible)]="showDialog"
+  [modal]="true"
+  [style]="{ width: '650px' }"
+  [contentStyle]="{ padding: '1.5rem' }"
+>
+  <form [formGroup]="productForm" (ngSubmit)="saveProduct()" class="flex flex-col gap-4">
+    <div>
+      <label class="block mb-1 font-medium">Title</label>
+      <input pInputText formControlName="title" class="w-full" />
+    </div>
+
+    <div class="grid grid-cols-2 gap-4">
+      <div>
+        <label class="block mb-1 font-medium">Price</label>
+        <input pInputText type="number" formControlName="price" class="w-full" />
+      </div>
+      <div>
+        <label class="block mb-1 font-medium">Stock</label>
+        <input pInputText type="number" formControlName="stock" class="w-full" />
+      </div>
+    </div>
+
+    <div>
+      <label class="block mb-1 font-medium">Category</label>
+      <select formControlName="categoryId" class="p-inputtext w-full border rounded px-2 py-2">
+        <option *ngFor="let cat of categories()" [ngValue]="cat.id">
+          {{ cat.name }}
+        </option>
+      </select>
+    </div>
+
+    <div>
+      <label class="block mb-1 font-medium">Description</label>
+      <textarea
+        pInputTextarea
+        formControlName="description"
+        rows="3"
+        class="w-full outline-1 resize-none p-4 rounded"
+      ></textarea>
+    </div>
+
+    <div>
+      <label class="block mb-1 font-medium">Image</label>
+      <div class="flex items-center gap-3">
+        <label
+          for="imageUpload"
+          class="cursor-pointer bg-blue-600 text-white px-4 py-2 rounded flex items-center gap-2 hover:bg-blue-700 transition"
+        >
+          <i class="pi pi-upload"></i>
+          Upload Image
+        </label>
+        <input id="imageUpload" type="file" (change)="onImageChange($event)" class="hidden" />
+        <span *ngIf="imagePreview" class="ml-2 text-sm text-gray-600">Selected</span>
+      </div>
+      <img
+        *ngIf="imagePreview"
+        [src]="imagePreview"
+        class="mt-3 w-32 h-32 object-cover border rounded"
+      />
+    </div>
+    <!-- Is Active -->
+    <div class="flex items-center gap-2 mt-2">
+      <p-checkbox formControlName="isActive" binary="true"></p-checkbox>
+      <label class="font-medium">Active</label>
+    </div>
+
+    <div class="flex justify-end gap-3 pt-2">
+      <p-button
+        type="submit"
+        label="{{ selectedProduct ? 'Update' : 'Add' }}"
+        [disabled]="productForm.invalid"
+      ></p-button>
+      <p-button
+        label="Cancel"
+        class="p-button-secondary"
+        (onClick)="showDialog.set(false)"
+      ></p-button>
+    </div>
+  </form>
+</p-dialog>

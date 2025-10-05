@@ -1,0 +1,71 @@
+<div
+  class="bg-white shadow-xl rounded-xl p-6 flex flex-col gap-4 relative text-black w-[300px] h-[350px]"
+>
+  <!-- Product Image -->
+  <div class="flex justify-center">
+    <img
+      [src]="getImageUrl(product().imageUrl)"
+      alt="{{ product().title }}"
+      class="w-[200px] h-[150px] object-contain cursor-pointer"
+      (click)="goToDetails()"
+    />
+  </div>
+
+  <!-- Product Info -->
+  <div class="flex flex-col gap-2 mt-2 flex-1">
+    <span class="text-lg font-bold cursor-pointer" (click)="goToDetails()">
+      {{ product().title }}
+    </span>
+    <span> <app-product-rating [rating]="product()!.rating ?? 0" /> </span>
+    <span class="text-md text-gray-700">${{ product().price }}</span>
+  </div>
+
+  <!-- Cart Controls -->
+  <div class="w-[70%] mx-auto">
+    <!-- If quantity is 0, show Add to Cart -->
+    <ng-container *ngIf="cartService.getQuantity(product()) == 0; else quantityControls">
+      <app-primary-button
+        (buttonClicked)="cartService.addToCart(product())"
+        label="Add to Cart"
+        class="w-full"
+      />
+    </ng-container>
+
+    <!-- Else show update quantity buttons -->
+    <ng-template #quantityControls>
+      <div class="flex items-center justify-center gap-3 rounded-lg px-4 py-2">
+        <!-- Decrease -->
+        <button
+          (click)="cartService.decreaseQuantity(product())"
+          class="text-2xl text-red-500 hover:text-red-700 flex items-center cursor-pointer"
+        >
+          <fa-icon icon="circle-minus"></fa-icon>
+        </button>
+
+        <span class="font-semibold text-lg">
+          {{ cartService.getQuantity(product()) }}
+        </span>
+
+        <!-- Increase -->
+        <button
+          (click)="cartService.addToCart(product())"
+          class="text-2xl text-green-500 hover:text-green-700 flex items-center cursor-pointer"
+        >
+          <fa-icon icon="circle-plus"></fa-icon>
+        </button>
+      </div>
+    </ng-template>
+  </div>
+
+  <!-- Stock Badge -->
+  <span
+    class="absolute top-2 right-3 text-sm font-bold"
+    [class]="product().stock ? 'text-green-500' : 'text-red-500'"
+  >
+    @if (product().stock) {
+    <p>available</p>
+    } @else {
+    <p>Out of stock</p>
+    }
+  </span>
+</div>

@@ -1,0 +1,40 @@
+<!-- Sidebar Drawer -->
+<p-drawer [(visible)]="visible" position="left" [modal]="true" [dismissible]="true">
+  <ng-template #headless>
+    <div class="flex flex-col h-full bg-gradient-to-b from-slate-50 to-white">
+      <!-- Header -->
+      <div class="p-6 border-b border-slate-200">
+        <h2 class="text-lg font-bold text-slate-800">Categories</h2>
+        <p class="text-xs text-slate-500">Browse all categories</p>
+      </div>
+
+      <!-- Categories -->
+      <div class="overflow-y-auto flex-1 py-4">
+        <ul class="list-none px-3 m-0 space-y-1">
+          @for (category of categories(); track category.id) {
+          <li
+            (click)="goToCategory(category.id)"
+            class="flex items-center cursor-pointer px-4 py-3 rounded-lg  text-slate-700 hover:bg-slate-100 hover:text-slate-900 transition-all duration-200 border border-transparent group"
+          >
+            <div
+              class="w-9 h-9 rounded-lg bg-slate-100 group-hover:bg-white flex items-center justify-center mr-3 transition-all duration-200"
+            >
+              <i class="pi pi-tag text-slate-600 group-hover:text-blue-600"></i>
+            </div>
+            <span class="font-semibold">{{ category.name }}</span>
+          </li>
+          }
+        </ul>
+      </div>
+    </div>
+  </ng-template>
+</p-drawer>
+
+<!-- Toggle button -->
+<button
+  (click)="openDrawer()"
+  class="flex items-center justify-center gap-1 px-4 py-2 rounded-lg text-black transition cursor-pointer hover:text-blue-600"
+>
+  <i class="pi pi-bars"></i>
+  <span class="hidden md:inline">Categories</span>
+</button>

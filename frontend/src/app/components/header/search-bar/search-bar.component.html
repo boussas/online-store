@@ -1,0 +1,16 @@
+<div
+  class="flex items-center bg-white border border-gray-300 rounded overflow-hidden w-full max-w-md"
+>
+  <input
+    type="text"
+    [(ngModel)]="searchQuery"
+    placeholder="Search..."
+    class="ml-5 flex-1 px-2 py-1 focus:outline-none"
+    (input)="handleSearch()"
+  />
+  <fa-icon
+    icon="magnifying-glass"
+    class="cursor-pointer text-black px-3"
+    (click)="handleSearch()"
+  ></fa-icon>
+</div>

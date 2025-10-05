@@ -1,0 +1,34 @@
+<div class="bg-white p-6 rounded-xl shadow-md border border-gray-100 w-full max-w-md">
+  <!-- Header -->
+  <h2 class="text-xl font-semibold text-gray-800 border-b pb-3 mb-4">Order Summary</h2>
+
+  <!-- Summary rows -->
+  <div class="flex flex-col gap-3 text-gray-700">
+    <div class="flex justify-between text-sm">
+      <span>Subtotal</span>
+      <span class="font-medium">${{ subtotal() | number : '1.2-2' }}</span>
+    </div>
+
+    <div class="flex justify-between text-sm">
+      <span>Shipping</span>
+      <span class="text-green-500 font-bold">FREE</span>
+    </div>
+
+    <div class="flex justify-between text-sm">
+      <span>Taxes</span>
+      <span class="text-gray-700 font-medium">${{ tax() | number : '1.2-2' }}</span>
+    </div>
+
+    <hr class="my-2" />
+
+    <div class="flex justify-between text-lg font-semibold text-gray-900">
+      <span>Total</span>
+      <span>${{ totalWithTax() | number : '1.2-2' }}</span>
+    </div>
+  </div>
+
+  <!-- Checkout button -->
+  <div class="mt-6">
+    <app-primary-button label="Proceed to Checkout" class="w-full" />
+  </div>
+</div>

@@ -1,0 +1,149 @@
+<div class="h-screen">
+  <!-- admin-layout.component.html -->
+  <p-drawer [(visible)]="visible" position="left" [modal]="true">
+    <ng-template #headless>
+      <div class="flex flex-col h-full bg-gradient-to-b from-slate-50 to-white">
+        <!-- Sidebar Header -->
+        <div class="p-6 border-b border-slate-200">
+          <div class="flex items-center gap-3">
+            <div
+              class="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center shadow-lg"
+            >
+              <i class="pi pi-prime text-white text-xl"></i>
+            </div>
+            <div>
+              <h2 class="text-lg font-bold text-slate-800">Admin Panel</h2>
+              <p class="text-xs text-slate-500">Management System</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Navigation Menu -->
+        <div class="overflow-y-auto flex-1 py-4">
+          <ul class="list-none px-3 m-0 space-y-1">
+            <li>
+              <a
+                routerLink="/admin/dashboard"
+                routerLinkActive="bg-blue-50 text-blue-700 border-blue-200"
+                class="flex items-center cursor-pointer px-4 py-3 rounded-lg text-slate-700 hover:bg-slate-100 hover:text-slate-900 transition-all duration-200 border border-transparent group"
+              >
+                <div
+                  class="w-9 h-9 rounded-lg bg-slate-100 group-hover:bg-white flex items-center justify-center mr-3 transition-all duration-200"
+                >
+                  <i class="pi pi-home text-slate-600 group-hover:text-blue-600"></i>
+                </div>
+                <span class="font-semibold">Dashboard</span>
+              </a>
+            </li>
+            <li>
+              <a
+                routerLink="/admin/products"
+                routerLinkActive="bg-blue-50 text-blue-700 border-blue-200"
+                class="flex items-center cursor-pointer px-4 py-3 rounded-lg text-slate-700 hover:bg-slate-100 hover:text-slate-900 transition-all duration-200 border border-transparent group"
+              >
+                <div
+                  class="w-9 h-9 rounded-lg bg-slate-100 group-hover:bg-white flex items-center justify-center mr-3 transition-all duration-200"
+                >
+                  <i class="pi pi-shopping-cart text-slate-600 group-hover:text-blue-600"></i>
+                </div>
+                <span class="font-semibold">Products</span>
+              </a>
+            </li>
+            <li>
+              <a
+                routerLink="/admin/categories"
+                routerLinkActive="bg-blue-50 text-blue-700 border-blue-200"
+                class="flex items-center cursor-pointer px-4 py-3 rounded-lg text-slate-700 hover:bg-slate-100 hover:text-slate-900 transition-all duration-200 border border-transparent group"
+              >
+                <div
+                  class="w-9 h-9 rounded-lg bg-slate-100 group-hover:bg-white flex items-center justify-center mr-3 transition-all duration-200"
+                >
+                  <i class="pi pi-tags text-slate-600 group-hover:text-blue-600"></i>
+                </div>
+                <span class="font-semibold">Categories</span>
+              </a>
+            </li>
+            <li>
+              <a
+                routerLink="/admin/orders"
+                routerLinkActive="bg-blue-50 text-blue-700 border-blue-200"
+                class="flex items-center cursor-pointer px-4 py-3 rounded-lg text-slate-700 hover:bg-slate-100 hover:text-slate-900 transition-all duration-200 border border-transparent group"
+              >
+                <div
+                  class="w-9 h-9 rounded-lg bg-slate-100 group-hover:bg-white flex items-center justify-center mr-3 transition-all duration-200"
+                >
+                  <i class="pi pi-shopping-bag text-slate-600 group-hover:text-blue-600"></i>
+                </div>
+                <span class="font-semibold">Orders</span>
+              </a>
+            </li>
+            <li>
+              <a
+                routerLink="/admin/customers"
+                routerLinkActive="bg-blue-50 text-blue-700 border-blue-200"
+                class="flex items-center cursor-pointer px-4 py-3 rounded-lg text-slate-700 hover:bg-slate-100 hover:text-slate-900 transition-all duration-200 border border-transparent group"
+              >
+                <div
+                  class="w-9 h-9 rounded-lg bg-slate-100 group-hover:bg-white flex items-center justify-center mr-3 transition-all duration-200"
+                >
+                  <i class="pi pi-users text-slate-600 group-hover:text-blue-600"></i>
+                </div>
+                <span class="font-semibold">Customers</span>
+              </a>
+            </li>
+            <li>
+              <a
+                routerLink="/admin/settings"
+                routerLinkActive="bg-blue-50 text-blue-700 border-blue-200"
+                class="flex items-center cursor-pointer px-4 py-3 rounded-lg text-slate-700 hover:bg-slate-100 hover:text-slate-900 transition-all duration-200 border border-transparent group"
+              >
+                <div
+                  class="w-9 h-9 rounded-lg bg-slate-100 group-hover:bg-white flex items-center justify-center mr-3 transition-all duration-200"
+                >
+                  <i class="pi pi-cog text-slate-600 group-hover:text-blue-600"></i>
+                </div>
+                <span class="font-semibold">Settings</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </ng-template>
+  </p-drawer>
+
+  <!-- Top Navigation Bar -->
+  <div
+    class="flex items-center justify-between px-6 py-4 border-b border-slate-200 bg-white shadow-sm"
+  >
+    <div class="flex items-center gap-4">
+      <p-button
+        (click)="openDrawer()"
+        icon="pi pi-bars"
+        [text]="true"
+        [rounded]="true"
+        severity="secondary"
+        class="hover:bg-slate-100"
+      ></p-button>
+      <div class="hidden md:block">
+        <h1 class="text-xl font-bold text-slate-800">Admin Dashboard</h1>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-3">
+      <p-button
+        icon="pi pi-bell"
+        [text]="true"
+        [rounded]="true"
+        severity="secondary"
+        badge="3"
+        badgeSeverity="danger"
+      ></p-button>
+      <p-button icon="pi pi-search" [text]="true" [rounded]="true" severity="secondary"></p-button>
+    </div>
+  </div>
+
+  <!-- Main Content Area -->
+  <div class="p-6 bg-slate-50">
+    <router-outlet></router-outlet>
+  </div>
+</div>

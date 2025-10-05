@@ -1,0 +1,11 @@
+<div class="px-35 pt-10 bg-slate-100 grid grid-cols-5 gap-4 min-h-dvh">
+  @if (filteredProducts().length) { 
+    @for (product of filteredProducts(); track product.id) {
+      <app-product-card [product]="product" />
+    }
+  } @else {
+    <div class="col-span-full flex justify-center items-center h-40">
+      <p class="text-black text-2xl font-bold">No products found!</p>
+    </div>
+  }
+</div>

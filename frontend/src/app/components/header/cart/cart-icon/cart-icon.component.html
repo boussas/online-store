@@ -1,0 +1,9 @@
+<a [routerLink]="'/cart'" class="relative inline-block">
+  <fa-icon icon="shopping-cart" class="text-2xl text-blue-600"></fa-icon>
+  <span
+    *ngIf="cartService.cart().length > 0"
+    class="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold rounded-full px-1.5 py-0.5"
+  >
+      {{ cartItemCount() }}
+  </span>
+</a>

@@ -1,0 +1,11 @@
+::ng-deep .p-datatable-caption {
+  background-color: #ffffff !important;
+  border-top: none !important;
+  border-bottom: none !important;
+  padding: 0.5rem 1rem !important;
+  margin: 0 !important;
+}
+
+::ng-deep .p-datatable-caption h2 {
+  color: #000000 !important;
+}

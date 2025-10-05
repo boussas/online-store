@@ -1,0 +1,35 @@
+<div class="dropdown dropdown-end dropdown-click">
+  <ng-container *ngIf="authService.isAuthenticated(); else loginLinks">
+    <div class="flex items-center gap-2">
+      <div
+        class="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold"
+      >
+        {{ getInitials() }}
+      </div>
+
+      <button (click)="logout()" class="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600">
+        Logout
+      </button>
+    </div>
+  </ng-container>
+
+  <ng-template #loginLinks>
+    <fa-icon
+      tabindex="0"
+      role="button"
+      [icon]="['fas', 'user']"
+      class="text-2xl text-blue-600 cursor-pointer"
+    ></fa-icon>
+    <ul
+      tabindex="0"
+      class="dropdown-content bg-white menu rounded-box z-1 p-2 shadow-sm w-fit text-md"
+    >
+      <li class="hover:bg-slate-100 w-full">
+        <a routerLink="/login">Login</a>
+      </li>
+      <li class="hover:bg-slate-100 w-full">
+        <a routerLink="/register">Register</a>
+      </li>
+    </ul>
+  </ng-template>
+</div>
